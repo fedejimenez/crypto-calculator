@@ -6,6 +6,19 @@ class Search extends Component {
   }
 
   render() {
+    const searchResults = this.props.searchResults.map(currency => (
+      <li
+        key={currency.id}
+        className="currency-list-item"
+        data-id={currency.id}
+      >
+        <a href="#" className="currency">
+          {" "}
+          <span> {currency.name} </span>
+          <span> {currency.currency_symbol} </span>
+        </a>
+      </li>
+    ));
     return (
       <div>
         <h1>Cryptocurrency Portfolio Calculator</h1>
@@ -23,6 +36,7 @@ class Search extends Component {
               onChange={this.props.handleChange}
             />
           </div>
+          <div className="currency-list">{searchResults}</div>
         </form>
       </div>
     );
