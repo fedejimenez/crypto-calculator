@@ -1,0 +1,59 @@
+# inherit_from:
+# - https://shopify.github.io/ruby-style-guide/rubocop.yml
+
+AllCops:
+  TargetRubyVersion: 2.6
+  Exclude:
+    - "db/**/*"
+    - "config/**/*"
+    - "script/**/*"
+    - "bin/{rails,rake}"
+    - "node_modules/**/*"
+    - "vendor/**/*"
+    - "tmp/**/*"
+    - "spec/**/*"
+    - ".git/**/*"
+    - "vendor/**/*"
+    - "bin/*"
+    - "Gemfile"
+    - "Gemfile.lock"
+    - "Rakefile"
+    - db/schema.rb
+    - db/seeds.rb
+    - db/migrate/*.rb
+    - config/initializers/devise.rb
+    - !ruby/regexp /old_and_unused\.rb$/
+
+Metrics/MethodLength:
+  CountComments: false
+  Max: 15
+
+Layout/LineLength:
+  Max: 85
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: false
+
+Lint/RaiseException:
+  Enabled: false
+
+Lint/StructNewOverride:
+  Enabled: false
+
+Style/ExponentialNotation:
+  Enabled: false
+
+Style/HashEachMethods:
+  Enabled: false
+
+Style/HashTransformKeys:
+  Enabled: false
+
+Style/HashTransformValues:
+  Enabled: false
