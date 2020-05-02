@@ -1,39 +1,26 @@
 # frozen_string_literal: true
 
 class Currency < ApplicationRecord
-  def fetch_coins_list
-    url_API = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
-
-    query = {
-      'start':'1',
-      'limit':'200'
-    }
-
+  def current_price
     headers = {
-      'Accepts': 'application/json',
       'X-CMC_PRO_API_KEY': ENV['API_KEY_COINMARKETCAP']
     }
 
-    request = HTTParty.get(url_API, query: query, headers: headers)
+    url_api_path = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/'
+    url_endpoint = "quotes/latest?slug=#{slug}"
+
+    url = url_api_path + url_endpoint
+
+    request = HTTParty.get(url,
+                           'Content-Type': 'application/json',
+                           headers: headers)
+
     response = JSON.parse(request.body)
-
-    if response['status']['error_code'].zero?
-      @coins_list = response['data']
-    else
-      @coins_list = []
-      # return response['status']['error_message']
-    end
+    coin_id = get_id(response.dig('data')).first
+    response.dig('data', coin_id, 'quote', 'USD', 'price')
   end
 
-  def current_price_usd
-    fetch_coins_list
-
-    @coin_data = @coins_list.select {|coin| coin["symbol"] == self.currency_symbol }
-
-    @coin_data[0]['quote']['USD']['price']
-  end
-
-  def calculate_value(amount)
-    (current_price_usd.to_f * amount.to_f).round(4)
+  def get_id(data)
+    data.keys
   end
 end
