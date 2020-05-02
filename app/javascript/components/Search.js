@@ -11,6 +11,7 @@ class Search extends Component {
         key={currency.id}
         className="currency-list-item"
         data-id={currency.id}
+        onClick={this.props.handleSelect}
       >
         <a href="#" className="currency">
           {" "}
