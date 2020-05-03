@@ -1,47 +1,38 @@
-import React, { Component } from "react";
+import React from "react";
+import SearchResult from "./SearchResult";
 
-class Search extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const searchResults = this.props.searchResults.map(currency => (
-      <li
-        key={currency.id}
-        className="currency-list-item"
-        data-id={currency.id}
-        onClick={this.props.handleSelect}
-      >
-        <a href="#" className="currency">
-          {" "}
-          <span> {currency.name} </span>
-          <span> {currency.currency_symbol} </span>
-        </a>
-      </li>
-    ));
+const Search = props => {
+  const results = props.searchResults.map(curr => {
     return (
-      <div>
-        <h1>Cryptocurrency Portfolio Calculator</h1>
-        <form>
-          <div className="form-group">
-            <label>Search for a Currency:</label>
-            <br />
-            <input
-              className="field"
-              autoComplete="off"
-              type="text"
-              name="name"
-              placeholder="Ex: Bitcoin, Ethereum..."
-              value={this.props.name}
-              onChange={this.props.handleChange}
-            />
-          </div>
-          <div className="currency-list">{searchResults}</div>
-        </form>
-      </div>
+      <SearchResult
+        key={curr.id}
+        currency={curr}
+        handleSelect={props.handleSelect.bind(null, curr)}
+      />
     );
-  }
-}
+  });
+
+  return (
+    <div>
+      <h1>Cryptocurrency Portfolio Calculator</h1>
+      <form>
+        <div className="form-group">
+          <label>Search for a Currency:</label>
+          <br />
+          <input
+            onChange={props.handleChange}
+            autoComplete="off"
+            type="text"
+            name="name"
+            placeholder="Ex: Bitcoin, Litecoin, Ethereum..."
+            value={props.name}
+            className="field"
+          />
+        </div>
+        <div className="currency-list">{results}</div>
+      </form>
+    </div>
+  );
+};
 
 export default Search;
