@@ -4,10 +4,7 @@ class CurrenciesController < ApplicationController
   def index; end
 
   def search
-    @currencies = Currency.where('LOWER(name) LIKE ?',
-                                 "%#{params[:search].downcase}%")
-
-    render json: { currencies: @currencies }
+    render json: { currencies: currencies }
   end
 
   # Takes in the currency id and amount owned
@@ -27,5 +24,10 @@ class CurrenciesController < ApplicationController
 
   def currency
     @currency ||= Currency.find_by(id: params[:id])
+  end
+
+  def currencies
+    @currencies ||= Currency.where('LOWER(name) LIKE ?',
+                                   "%#{params[:search].downcase}%")
   end
 end
