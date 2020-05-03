@@ -12,11 +12,13 @@ class CurrenciesController < ApplicationController
   def calculate
     amount = params[:amount]
 
+    current_price = currency.current_price
+
     render json: {
       currency: currency,
-      current_price: currency.current_price,
+      current_price: current_price,
       amount: amount,
-      value: currency.calculate_value(amount)
+      value: currency.calculate_value(current_price, amount)
     }
   end
 

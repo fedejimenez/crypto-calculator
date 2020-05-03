@@ -5,8 +5,8 @@ class Currency < ApplicationRecord
 
   # Calculate the value based off the assets current price and the amount owned
   # @param amount [String] the amount a user owns
-  def calculate_value(amount)
-    (current_price.to_f * amount.to_f).round(4)
+  def calculate_value(curr_price, amount)
+    (curr_price.to_f * amount.to_f).round(4)
   end
 
   def current_price
